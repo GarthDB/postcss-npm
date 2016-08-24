@@ -1,0 +1,49 @@
+{
+  "name": "postcss-npm",
+  "version": "0.0.1",
+  "description": "Import CSS from npm modules using rework",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GarthDB/postcss-npm.git"
+  },
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "import",
+    "npm",
+    "modules"
+  ],
+  "author": "Garth Braithwaite <garthdb@gmail.com> (http://garthdb.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/GarthDB/postcss-npm/issues"
+  },
+  "homepage": "https://github.com/GarthDB/postcss-npm#readme",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "postcss": "^5.1.2"
+  },
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-istanbul": "^2.0.0",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-register": "^6.11.6",
+    "codeclimate-test-reporter": "^0.3.3",
+    "eslint": "^3.3.1",
+    "eslint-config-airbnb": "^10.0.1",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.1.0",
+    "eslint-plugin-react": "^6.1.2",
+    "nyc": "^8.1.0",
+    "perfectionist": "^2.2.0",
+    "topcoat-utils": "^0.4.1"
+  }
+}
