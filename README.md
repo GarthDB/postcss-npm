@@ -8,8 +8,7 @@
      title="Philosopher’s stone, logo of PostCSS"
      src="http://postcss.github.io/postcss/logo.svg"></a>
 
-Import CSS styles from NPM modules using
-[rework](https://github.com/reworkcss/rework).
+Import CSS styles from NPM modules using [postcss](https://github.com/postcss/postcss).
 
 This lets you use `@import` CSS using the same rules you use for `require` in Node. Specify the CSS file for a module using the `style` field in `package.json` and use `@import "my-module";`, or specify the file name in the module, like `@import "my-module/my-file";`. You can also require files relative to the current file using `@import "./my-file";`.
 
