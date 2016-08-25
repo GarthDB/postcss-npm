@@ -17,46 +17,74 @@ function runNPM(input, opts, parserOpts = {}) {
 
 test('Import relative source file', (t) => {
   const input = '@import "./test";';
-  runNPM(input, {}, { from: 'test/file.css' })
+  return runNPM(input, {}, { from: 'file.css' })
   .then(result => {
-    t.equal(result.css, '.test {\n  content: "Test file";\n}');
+    t.deepEqual(result.css.trim(), '.test {\n  content: "Test file";\n}');
   });
 });
 
-// test('Import package', function(t) {
-//     var input = '@import "test";';
-//     var output = rework(input, { source: 'test/index.css' })
-//             .use(reworkNPM())
-//             .toString();
-//     t.equal(output, '.test {\n  content: "Test package";\n}');
-//     t.end();
-// });
-//
-// test('Import package with custom style file', function(t) {
-//     var input = '@import "custom";';
-//     var output = rework(input, { source: 'test/index.css' })
-//         .use(reworkNPM())
-//         .toString();
-//     t.equal(output, '.custom {\n  content: "Custom package";\n}');
-//     t.end();
-// });
-//
-// test('Import files imported from imported package', function(t) {
-//     var input = '@import "nested";';
-//     var output = rework(input, { source: 'test/index.css' })
-//         .use(reworkNPM())
-//         .toString();
-//     t.equal(output, '.test {\n  content: "From nested test package";\n}');
-//     t.end();
-// });
-//
-// test('Import file with single quotes', function(t) {
-//     var input = "@import './test';";
-//     var output = rework(input, { source: 'test/index.css' })
-//         .use(reworkNPM())
-//         .toString();
-//     t.equal(output, '.test {\n  content: "Test file";\n}');
-//     t.end();
+test('Import package', (t) => {
+  const input = '@import "test";';
+  return runNPM(input, {}, { from: 'index.css' })
+  .then(result => {
+    t.deepEqual(result.css.trim(), '.test {\n  content: "Test package";\n}');
+  });
+});
+
+test('Import package with custom style file', (t) => {
+  const input = '@import "custom";';
+  return runNPM(input, {}, { from: 'index.css' })
+  .then(result => {
+    t.deepEqual(result.css.trim(), '.custom {\n  content: "Custom package";\n}');
+  });
+});
+
+test('Import files imported from imported package', (t) => {
+  const input = '@import "nested";';
+  return runNPM(input, {}, { from: 'index.css' })
+  .then(result => {
+    t.deepEqual(result.css.trim(), '.test {\n  content: "From nested test package";\n}');
+  });
+});
+
+test('Import files imported from imported package', (t) => {
+  const input = "@import './test';";
+  return runNPM(input, {}, { from: 'index.css' })
+  .then(result => {
+    t.deepEqual(result.css.trim(), '.test {\n  content: "Test file";\n}');
+  });
+});
+test('Import duplicate imports', (t) => {
+  const input = '@import "./test";\n@import "./test";';
+  return runNPM(input, {}, { from: 'file.css' })
+  .then(result => {
+    t.deepEqual(result.css.trim(),
+    '.test {\n  content: "Test file";\n}\n.test {\n  content: "Test file";\n}');
+  });
+});
+// test('Import files imported from imported package', (t) => {
+//   const input =
+//   `@media (min-width: 320px) {
+//     @import "test";
+//   }
+//   @media (min-width: 640px) {
+//     @import "test";
+//   }`;
+//   const expected =
+//   `@media (min-width: 320px) {
+//     .test {
+//       content: "Test package"
+//     }
+//   }
+//   @media (min-width: 640px) {
+//     .test {
+//       content: "Test package";
+//     }
+//   }`;
+//   return runNPM(input, {}, { from: 'index.css' })
+//   .then(result => {
+//     t.deepEqual(result.css.trim(), expected);
+//   });
 // });
 //
 // test('Import package in @media', function(t) {
