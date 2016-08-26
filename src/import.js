@@ -61,12 +61,10 @@ export default class Import {
       const processor = this.processor;
       this.processorOpts.from = importObj.from;
       return processor.process(importObj.contents, this.processorOpts)
-        .then(result =>
-          this.inline(importObj.scope, result.root).then(() => {
-            importObj.atRule.parent.insertBefore(importObj.atRule, result.root.nodes);
-            importObj.atRule.remove();
-          })
-        );
+        .then(result => {
+          importObj.atRule.parent.insertBefore(importObj.atRule, result.root.nodes);
+          importObj.atRule.remove();
+        });
     }));
   }
   getImport(scope, atRule) {
