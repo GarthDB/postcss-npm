@@ -1,6 +1,6 @@
 {
   "name": "postcss-npm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Import CSS from npm modules using rework",
   "main": "./lib/index.js",
   "scripts": {
