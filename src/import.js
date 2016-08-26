@@ -32,6 +32,19 @@ function createProcessor(plugins) {
   return postcss();
 }
 
+function isAtruleDescendant(node) {
+  let { parent } = node;
+  let descended = false;
+
+  while (parent && parent.type !== 'root') {
+    if (parent.type === 'atrule') {
+      descended = parent.params;
+    }
+    parent = parent.parent;
+  }
+  return descended;
+}
+
 export default class Import {
   constructor(css, opts = {}) {
     this.opts = opts;
@@ -40,7 +53,7 @@ export default class Import {
     this.prefilter = opts.prefilter || identity;
     shim = opts.shim || {};
     this.alias = opts.alias || {};
-    return this.inline([], this.css);
+    return this.inline({}, this.css);
   }
   inline(scope, css) {
     const imports = [];
@@ -51,6 +64,7 @@ export default class Import {
         imports.push(result);
       }
     });
+
     return Promise.all(imports.map(importObj => {
       const processor = createProcessor(this.opts.plugins);
       return processor.process(importObj.contents, { from: importObj.from })
@@ -67,12 +81,18 @@ export default class Import {
     if (!file) {
       return false;
     }
-
-    if (scope.indexOf(file) !== -1) {
+    let query = isAtruleDescendant(atRule);
+    if (!query) {
+      query = '0';
+    }
+    scope['0'] = scope['0'] || [];
+    scope[query] = scope[query] || [];
+    if (scope[query].indexOf(file) !== -1 || scope['0'].indexOf(file) !== -1) {
+      atRule.remove();
       return false;
     }
-    scope.push(file);
-    const contents = fs.readFileSync(file, 'utf8');
+    scope[query].push(file);
+    const contents = this.prefilter(fs.readFileSync(file, 'utf8'), file);
     const from = path.relative(this.root, file);
     return { atRule, contents, scope, from };
   }

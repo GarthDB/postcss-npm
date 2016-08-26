@@ -1,0 +1,6 @@
+.test {
+  content: "Test package";
+}
+
+@media (min-width: 320px) {
+}

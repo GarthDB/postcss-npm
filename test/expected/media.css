@@ -1,0 +1,11 @@
+@media (min-width: 320px) {
+  .test {
+    content: "Test package";
+  }
+}
+
+@media (min-width: 640px) {
+  .test {
+    content: "Test package";
+  }
+}

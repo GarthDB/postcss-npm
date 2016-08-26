@@ -9,7 +9,7 @@
     "test": "ava",
     "coverage": "nyc npm test",
     "codeclimate": "npm run coverage && nyc report --reporter=text-lcov | codeclimate-test-reporter",
-    "lint": "eslint --ignore-path .gitignore ."
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
