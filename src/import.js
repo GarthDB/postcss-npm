@@ -1,7 +1,6 @@
 import path from 'path';
 import resolve from 'resolve';
 import fs from 'fs';
-import postcss from 'postcss';
 
 const ABS_URL = /^url\(|:\/\//;
 const QUOTED = /^['"]|['"]$/g;

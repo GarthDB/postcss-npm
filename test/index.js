@@ -34,7 +34,10 @@ test('Use the same parsing options on imports', (t) => {
     perfectionist({ indentSize: 2, maxAtRuleLength: false, maxSelectorLength: 1 }),
   ]).process(input, { parser: inheritParser, from: 'index.css' })
   .then(result => {
-    t.deepEqual(result.css.trim(), '.b:before {\n  content: \"\";\n}\n\n.a {\n  inherit: .b:before;\n}');
+    t.deepEqual(
+      result.css.trim(),
+      '.b:before {\n  content: "";\n}\n\n.a {\n  inherit: .b:before;\n}'
+    );
   });
 });
 
