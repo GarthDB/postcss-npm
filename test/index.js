@@ -26,6 +26,14 @@ test('Import relative source file', (t) => {
   });
 });
 
+test('Use the same parsing options on imports', (t) => {
+  const input = '@import "./test";';
+  return runNPM(input, {}, { from: 'index.css' })
+  .then(result => {
+    t.deepEqual(result.css.trim(), '.test {\n  content: "Test file";\n}');
+  });
+});
+
 test('Import package', (t) => {
   const input = '@import "test";';
   return runNPM(input, {}, { from: 'index.css' })
