@@ -1,6 +1,7 @@
 import path from 'path';
 import resolve from 'resolve';
 import fs from 'fs';
+import postcss from 'postcss';
 
 const ABS_URL = /^url\(|:\/\//;
 const QUOTED = /^['"]|['"]$/g;
@@ -44,6 +45,7 @@ export default class Import {
     this.prefilter = opts.prefilter || identity;
     shim = opts.shim || {};
     this.alias = opts.alias || {};
+    this.includePlugins = opts.includePlugins || false;
     return this.inline({}, this.css);
   }
   inline(scope, css) {
@@ -57,7 +59,7 @@ export default class Import {
     });
 
     return Promise.all(imports.map(importObj => {
-      const processor = this.processor;
+      const processor = this.generateProcessor();
       this.processorOpts.from = importObj.from;
       return processor.process(importObj.contents, this.processorOpts)
         .then(result => {
@@ -125,5 +127,14 @@ export default class Import {
       (hasOwn(shim, pkg.name) && shim[pkg.name]) ||
           pkg.style || 'index.css';
     return pkg;
+  }
+  generateProcessor() {
+    let plugins = this.processor.plugins;
+    if (!this.includePlugins) {
+      plugins = plugins.filter(plugin =>
+        (plugin.postcssPlugin === 'postcss-npm')
+      );
+    }
+    return postcss(plugins);
   }
 }
