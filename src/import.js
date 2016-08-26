@@ -22,16 +22,6 @@ function hasOwn(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-function createProcessor(plugins) {
-  if (plugins) {
-    if (!Array.isArray(plugins)) {
-      throw new Error('plugins option must be an array');
-    }
-    return postcss(plugins);
-  }
-  return postcss();
-}
-
 function isAtruleDescendant(node) {
   let { parent } = node;
   let descended = false;
@@ -46,9 +36,11 @@ function isAtruleDescendant(node) {
 }
 
 export default class Import {
-  constructor(css, opts = {}) {
-    this.opts = opts;
+  constructor(css, opts = {}, result) {
     this.css = css;
+    this.opts = opts;
+    this.processor = result.processor;
+    this.processorOpts = result.opts;
     this.root = opts.root || process.cwd();
     this.prefilter = opts.prefilter || identity;
     shim = opts.shim || {};
@@ -66,8 +58,9 @@ export default class Import {
     });
 
     return Promise.all(imports.map(importObj => {
-      const processor = createProcessor(this.opts.plugins);
-      return processor.process(importObj.contents, { from: importObj.from })
+      const processor = this.processor;
+      this.processorOpts.from = importObj.from;
+      return processor.process(importObj.contents, this.processorOpts)
         .then(result =>
           this.inline(importObj.scope, result.root).then(() => {
             importObj.atRule.parent.insertBefore(importObj.atRule, result.root.nodes);
