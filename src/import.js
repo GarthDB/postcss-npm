@@ -46,7 +46,17 @@ export default class Import {
     shim = opts.shim || {};
     this.alias = opts.alias || {};
     this.includePlugins = opts.includePlugins || false;
+    this.prepend = opts.prepend || [];
+    if (!this.processorOpts.notFirst) this.prependImports();
     return this.inline({}, this.css);
+  }
+  prependImports() {
+    const resultPrepend = [];
+    this.prepend.forEach(importString => {
+      const atRule = postcss.parse(`@import "${importString}"`).first;
+      resultPrepend.push(atRule);
+    });
+    this.css.prepend(resultPrepend);
   }
   inline(scope, css) {
     const imports = [];
@@ -61,6 +71,7 @@ export default class Import {
     return Promise.all(imports.map(importObj => {
       const processor = this.generateProcessor();
       this.processorOpts.from = importObj.from;
+      this.processorOpts.notFirst = true;
       return processor.process(importObj.contents, this.processorOpts)
         .then(result => {
           importObj.atRule.parent.insertBefore(importObj.atRule, result.root.nodes);

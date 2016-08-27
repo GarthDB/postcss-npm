@@ -227,3 +227,12 @@ test('Include source maps again', (t) => {
     t.deepEqual(pos, { source: imported, line: 2, column: 4, name: null });
   });
 });
+
+test('Prepend file imports to css before processing', (t) => {
+  const input = '.basic-css{property:value;}';
+  const expected = read('prepend');
+  return runNPM(input, { prepend: ['test', 'custom'] }, { from: 'index.css' })
+  .then(result => {
+    t.is(result.css.trim(), expected);
+  });
+});

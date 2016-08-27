@@ -1,0 +1,11 @@
+.test {
+  content: "Test package";
+}
+
+.custom {
+  content: "Custom package";
+}
+
+.basic-css {
+  property: value;
+}
