@@ -65,7 +65,7 @@
     "eslint-plugin-react": "^6.1.2",
     "node-sass": "^3.8.0",
     "nyc": "^8.1.0",
-    "perfectionist": "^2.2.0",
+    "perfectionist": "^2.3.1",
     "postcss-inherit-parser": "^0.1.4",
     "source-map": "^0.5.6",
     "topcoat-utils": "^0.4.1"
