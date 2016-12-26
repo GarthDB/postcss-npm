@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/GarthDB/postcss-npm#readme",
   "dependencies": {
-    "debug": "^2.2.0",
+    "debug": "^2.5.2",
     "postcss": "^5.1.2",
     "resolve": "^1.1.7"
   },
