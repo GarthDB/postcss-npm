@@ -63,7 +63,7 @@
     "eslint-plugin-import": "^1.14.0",
     "eslint-plugin-jsx-a11y": "^2.1.0",
     "eslint-plugin-react": "^6.1.2",
-    "node-sass": "^3.8.0",
+    "node-sass": "^4.5.0",
     "nyc": "^8.1.0",
     "perfectionist": "^2.2.0",
     "postcss-inherit-parser": "^0.1.4",
