@@ -1,8 +1,11 @@
 {
-  "extends": "airbnb",
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true,
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "env": {
     "browser": true,
@@ -11,12 +14,8 @@
     "mocha": true,
   },
   "rules": {
-    "no-param-reassign": [2, {
+      "no-param-reassign": [2, {
       "props": false
-    }],
-    "react/require-extension": 0,
+    }]
   },
-  "plugins": [
-    "import",
-  ],
 }

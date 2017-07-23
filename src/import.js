@@ -9,19 +9,73 @@ const RELATIVE = /^\./;
 const SEPARATOR = '/';
 let shim;
 
+/**
+ *  Public: the most basic prefilter function that just returns what it is
+ *  given. A placeholder that can be replaced using options.
+ *
+ *  * `value` {*} the value to be returned
+ *
+ *  ## Examples
+ *
+ *  ```js
+ *  identity(true); //returns `true`.
+ *  ```
+ *
+ *  Returns {*} just `value`.
+ */
 function identity(value) {
   return value;
 }
 
+/**
+ *  Public: makes sure the import is not an absolute url.
+ *
+ *  * `filepath` {String} to test
+ *
+ *  ## Examples
+ *
+ *  ```js
+ *  isNpmImport('://example.com'); // returns `false`.
+ *  ```
+ *
+ *  Returns {Boolean} - `true` if not absolute, `false` if it is.
+ */
 function isNpmImport(filepath) {
   // Do not import absolute URLs
   return !ABS_URL.test(filepath);
 }
 
+/**
+ *  Public: helper method to check if an object has a specific property.
+ *
+ *  * `obj` {Object} any object to test.
+ *  * `prop` {String} property key.
+ *
+ *  ## Examples
+ *
+ *  ```js
+ *  hasOwn({test: 'yup'}, 'test'); // returns `true`.
+ *  ```
+ *
+ *  Returns {Boolean} `true` if `object` has a property named `prop`.
+ */
 function hasOwn(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
+/**
+ *  Public: checks if a PostCSS {Node} is a descendant of an atRule Node.
+ *
+ *  * `node` {Node}
+ *
+ *  ## Examples
+ *
+ *  ```js
+ *  let query = isAtruleDescendant(atRule);
+ *  ```
+ *
+ *  Returns {Boolean}
+ */
 function isAtruleDescendant(node) {
   let { parent } = node;
   let descended = false;
@@ -36,6 +90,23 @@ function isAtruleDescendant(node) {
 }
 
 export default class Import {
+  /**
+   *  Public: constructor for Import class.
+   *
+   *  * `css` {Root} PostCSS Root Node.
+   *  * `opts` (optional) {Object} plugin options.
+   *    * `root` {String} the root filepath directory.
+   *    * `prefilter` {Function} an optional function that can manipulate the imported file before applying it. Expected to return new contents {String}.
+   *      * `contents` {String} the contents of the
+   *      * `filepath` {String} the path to the file.
+   *    * `shim` {Object} an object of keys pertaining to strings in the @import statement and values that will replace them in the actual import.
+   *    * `alias` {Object} nearly identitcal to `shim`
+   *    * `includePlugins` {Boolean} when importing css, postcss plugins can be included in processing this contents.
+   *    * `prepend` {Array} of {Strings} of additional CSS files that can be prepended before processing.
+   *  * `result` {String}
+   *
+   *  Returns {Root} transformed PostCSS Root Node.
+   */
   constructor(css, opts = {}, result) {
     this.css = css;
     this.opts = opts;
@@ -52,7 +123,7 @@ export default class Import {
   }
   prependImports() {
     const resultPrepend = [];
-    this.prepend.forEach(importString => {
+    this.prepend.forEach((importString) => {
       const atRule = postcss.parse(`@import "${importString}"`).first;
       resultPrepend.push(atRule);
     });
@@ -60,7 +131,7 @@ export default class Import {
   }
   inline(scope, css) {
     const imports = [];
-    css.walkAtRules(atRule => {
+    css.walkAtRules((atRule) => {
       if (atRule.name !== 'import') return;
       const result = this.getImport(scope, atRule);
       if (result) {
@@ -68,12 +139,12 @@ export default class Import {
       }
     });
 
-    return Promise.all(imports.map(importObj => {
+    return Promise.all(imports.map((importObj) => {
       const processor = this.generateProcessor();
       this.processorOpts.from = importObj.from;
       this.processorOpts.notFirst = true;
       return processor.process(importObj.contents, this.processorOpts)
-        .then(result => {
+        .then((result) => {
           importObj.atRule.parent.insertBefore(importObj.atRule, result.root.nodes);
           importObj.atRule.remove();
         });
