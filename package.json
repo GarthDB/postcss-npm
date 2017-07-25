@@ -8,7 +8,7 @@
     "prepublish": "npm run compile",
     "test": "ava",
     "coverage": "nyc npm test",
-    "codeclimate": "npm run coverage && nyc report --reporter=text-lcov | codeclimate-test-reporter",
+    "report-coverage": "nyc report -r lcovonly && codecov",
     "lint": "eslint ./src"
   },
   "repository": {
@@ -54,7 +54,6 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.24.1",
-    "codeclimate-test-reporter": "^0.3.3",
     "codecov": "^2.2.0",
     "eslint": "^4.0.0",
     "node-sass": "^3.8.0",
