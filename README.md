@@ -1,6 +1,6 @@
 # PostCSS NPM
 
-[![Build Status](https://travis-ci.org/GarthDB/postcss-npm.svg?branch=master)](https://travis-ci.org/GarthDB/postcss-npm) [![Code Climate](https://codeclimate.com/github/GarthDB/postcss-npm/badges/gpa.svg)](https://codeclimate.com/github/GarthDB/postcss-npm) [![Test Coverage](https://codeclimate.com/github/GarthDB/postcss-npm/badges/coverage.svg)](https://codeclimate.com/github/GarthDB/postcss-npm/coverage) [![Issue Count](https://codeclimate.com/github/GarthDB/postcss-npm/badges/issue_count.svg)](https://codeclimate.com/github/GarthDB/postcss-npm) [![Dependency Status](https://david-dm.org/GarthDB/postcss-npm.svg)](https://david-dm.org/GarthDB/postcss-npm) [![Inline docs](http://inch-ci.org/github/GarthDB/postcss-npm.svg?branch=master)](http://inch-ci.org/github/GarthDB/postcss-npm) [![npm version](https://badge.fury.io/js/postcss-npm.svg)](https://badge.fury.io/js/postcss-npm)
+[![Build Status](https://travis-ci.org/GarthDB/postcss-npm.svg?branch=master)](https://travis-ci.org/GarthDB/postcss-npm) [![codecov](https://codecov.io/gh/GarthDB/postcss-npm/branch/master/graph/badge.svg)](https://codecov.io/gh/GarthDB/postcss-npm) [![Dependency Status](https://david-dm.org/GarthDB/postcss-npm.svg)](https://david-dm.org/GarthDB/postcss-npm) [![Inline docs](http://inch-ci.org/github/GarthDB/postcss-npm.svg?branch=master)](http://inch-ci.org/github/GarthDB/postcss-npm) [![npm version](https://badge.fury.io/js/postcss-npm.svg)](https://badge.fury.io/js/postcss-npm)
 
 ---
 
