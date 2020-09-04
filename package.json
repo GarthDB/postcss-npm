@@ -56,7 +56,7 @@
     "babel-register": "^6.24.1",
     "codecov": "^2.2.0",
     "eslint": "^4.0.0",
-    "node-sass": "^3.8.0",
+    "node-sass": "^4.14.1",
     "nyc": "^11.0.2",
     "perfectionist": "^2.2.0",
     "postcss-inherit-parser": "^0.1.4",
